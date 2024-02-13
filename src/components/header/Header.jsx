@@ -4,8 +4,11 @@ import { IoSearch } from "react-icons/io5";
 import { FaUserAlt } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../UserContext"
 
 const Header = () => {
+    const { user } = useContext(UserContext);
     return (
         <header className="Header flex justify-between">
             <Link to={"/"} className="logo">
@@ -19,6 +22,11 @@ const Header = () => {
             </div>
             <Link to={"/login"} className="user w-fit h-fit flex gap-2 border border-gray-300 rounded-full items-center py-2 px-4">
                 <AiOutlineMenu /> <span className='bg-gray-500 text-white p-1 rounded-full'><FaUserAlt /></span>
+                {!!user && (
+                    <div>
+                        {user.name}
+                    </div>
+                )}
             </Link>
         </header>
     )

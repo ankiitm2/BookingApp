@@ -1,8 +1,9 @@
 import { Link, Navigate } from "react-router-dom";
 import "./style.css"
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
+import { UserContext } from "../../UserContext";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const Login = () => {
     const [icon, setIcon] = useState(<FaEyeSlash className="w-7 h-6" />);
     const [errorMessage, setErrorMessage] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const { setUser } = useContext(UserContext);
 
     const handleToggle = () => {
         setType(type === 'password' ? 'text' : 'password');
@@ -24,7 +26,8 @@ const Login = () => {
                 setErrorMessage("Please enter a valid email and a password with at least 8 characters.");
                 return;
             }
-            await axios.post('/login', { email, password }, { withCredentials: true });
+            const { data } = await axios.post('/login', { email, password }, { withCredentials: true });
+            setUser(data);
             alert('Login successful');
             setRedirect(true);
         } catch (e) {
