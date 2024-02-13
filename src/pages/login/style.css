@@ -1,0 +1,5 @@
+@media only screen and (max-width:640px) {
+    .Login .min-w-96 {
+        min-width: -webkit-fill-available;
+    }
+}

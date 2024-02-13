@@ -1,0 +1,21 @@
+.logo a {
+    font-family: 'Lobster', sans-serif;
+}
+
+@media only screen and (max-width:640px) {
+    .Header {
+        flex-direction: column;
+    }
+
+    .Header .content {
+        flex-direction: column;
+        width: fit-content;
+        border-radius: 10%;
+        align-items: flex-start;
+    }
+
+    .Header .content .border-l {
+        border: 0;
+        padding-left: 0;
+    }
+}
