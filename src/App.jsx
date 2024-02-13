@@ -14,6 +14,7 @@ function App() {
 
   return (
     <Routes>
+      <Route path='/BookingApp' element={<Layout />} />
       <Route path="/" element={<Layout />}>
         <Route index element={<Indexpage />} />
         <Route path="/login" element={<Login />} />
