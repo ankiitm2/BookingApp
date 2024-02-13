@@ -4,7 +4,9 @@ export const UserContext = createContext({});
 
 export function UserContextProvider({ children }) {
     return (
-        { children }
+        <div>
+            {children}
+        </div>
     )
 }
 

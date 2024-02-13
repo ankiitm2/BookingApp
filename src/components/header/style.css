@@ -4,11 +4,13 @@
 
 @media only screen and (max-width:640px) {
     .Header {
-        flex-direction: column;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 
     .Header .content {
         flex-wrap: wrap;
+        width: fit-content;
     }
 
     .Header .content .border-l {
