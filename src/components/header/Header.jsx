@@ -21,7 +21,7 @@ const Header = () => {
             <Link to={user ? "/account" : "/login"} className="user w-fit h-fit flex gap-2 border border-gray-300 rounded-full items-center py-2 px-4">
                 <AiOutlineMenu /> <span className='bg-gray-500 text-white p-1 rounded-full'><FaUserAlt /></span>
                 {!!user && (
-                    <div>
+                    <div className="uppercase">
                         {user.name}
                     </div>
                 )}
