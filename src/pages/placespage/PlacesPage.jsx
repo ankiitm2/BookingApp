@@ -48,6 +48,11 @@ const PlacesPage = () => {
         setPhotoLink("");
     }
 
+    function uploadPhoto(e) {
+        const files = e.target.files;
+        console.log({ files });
+    }
+
     return (
         <div>
             {action !== 'new' && (
@@ -74,7 +79,7 @@ const PlacesPage = () => {
                                 </div>
                             ))}
                             <label className="cursor-pointer border bg-transparent rounded-2xl p-8 text-gray-500 text-2xl items-center flex gap-2 justify-center">
-                                <input type="file" className="hidden" /> <MdCloudUpload className="w-8 h-8" />Upload</label>
+                                <input type="file" className="hidden" onChange={uploadPhoto} /> <MdCloudUpload className="w-8 h-8" />Upload</label>
                         </div>
                         {preInput('Description', 'description of the place')}
                         <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
