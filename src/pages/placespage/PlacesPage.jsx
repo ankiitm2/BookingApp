@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa";
 import { useState } from "react";
 import Perks from "../perks/Perks";
 import PhotosUploader from "../../PhotosUploader";
+import axios from "axios";
 
 const PlacesPage = () => {
     const { action } = useParams();
@@ -16,6 +17,7 @@ const PlacesPage = () => {
     const [checkIn, setCheckIn] = useState('');
     const [checkOut, setCheckOut] = useState('');
     const [maxGuests, setMaxGuests] = useState(1);
+    const [redirect, setRedirect] = useState(false);
 
 
     function inputHeader(text) {
@@ -37,6 +39,11 @@ const PlacesPage = () => {
         )
     }
 
+    async function addNewPlace(e) {
+        e.preventDefault();
+        await axios.post('/places', { title, address, addedPhotos })
+    }
+
     return (
         <div>
             {action !== 'new' && (
@@ -46,7 +53,7 @@ const PlacesPage = () => {
             )}
             {action === 'new' && (
                 <div>
-                    <form>
+                    <form onSubmit={addNewPlace}>
                         {preInput('Title', 'Title for your place. Should be short ans catchy as in advertisement.')}
                         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="title: for example my fav place" />
                         {preInput('Address', 'Address to this place')}
