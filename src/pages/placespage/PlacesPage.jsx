@@ -1,17 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import "./style.css";
 import { FaPlus } from "react-icons/fa";
-import { MdCloudUpload } from "react-icons/md";
 import { useState } from "react";
 import Perks from "../perks/Perks";
-import axios from "axios";
+import PhotosUploader from "../../PhotosUploader";
 
 const PlacesPage = () => {
     const { action } = useParams();
     const [title, setTitle] = useState('');
     const [address, setAddress] = useState('');
     const [addedPhotos, setAddedPhotos] = useState([]);
-    const [photoLink, setPhotoLink] = useState('');
     const [description, setDescription] = useState('');
     const [perks, setPerks] = useState([]);
     const [extraInfo, setExtraInfo] = useState('');
@@ -39,20 +37,6 @@ const PlacesPage = () => {
         )
     }
 
-    async function addPhotoLink(e) {
-        e.preventDefault();
-        const { data: filename } = await axios.post('/upload-by-link', { link: photoLink });
-        setAddedPhotos(prev => {
-            return [...prev, filename];
-        })
-        setPhotoLink("");
-    }
-
-    function uploadPhoto(e) {
-        const files = e.target.files;
-        console.log({ files });
-    }
-
     return (
         <div>
             {action !== 'new' && (
@@ -68,19 +52,7 @@ const PlacesPage = () => {
                         {preInput('Address', 'Address to this place')}
                         <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="address" />
                         {preInput('Photos', 'more = better')}
-                        <div className="flex gap-2">
-                            <input type="text" value={photoLink} onChange={(e) => setPhotoLink(e.target.value)} placeholder={'Add using a link ....jpg'} />
-                            <button onClick={addPhotoLink} className="bg-gray-200 px-4 rounded-2xl">Add&nbsp;photo</button>
-                        </div>
-                        <div className="mt-2 grid gap-2 grid-cols-3 md:gridcols-4 lg:grid-cols-6">
-                            {addedPhotos.length > 0 && addedPhotos.map((link, index) => (
-                                <div key={index}>
-                                    <img className="rounded-2xl" src={'http://localhost:4000/uploads/' + link} alt="" />
-                                </div>
-                            ))}
-                            <label className="cursor-pointer border bg-transparent rounded-2xl p-8 text-gray-500 text-2xl items-center flex gap-2 justify-center">
-                                <input type="file" className="hidden" onChange={uploadPhoto} /> <MdCloudUpload className="w-8 h-8" />Upload</label>
-                        </div>
+                        <PhotosUploader addedPhotos={addedPhotos} onChange={setAddedPhotos} />
                         {preInput('Description', 'description of the place')}
                         <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
                         {preInput('Perks', 'select all perks of your place')}
@@ -88,7 +60,7 @@ const PlacesPage = () => {
                             <Perks selected={perks} onChange={setPerks} />
                         </div>
                         {preInput('Extra Info', 'house rules, etc')}
-                        <textarea />
+                        <textarea value={extraInfo} onChange={(e) => setExtraInfo(e.target.value)} />
                         {preInput('Check in & out times', 'add check in and out times, remember to have some time window for cleaning the room between guests.')}
                         <div className="grid gap-2 sm:grid-cols-3">
                             <div>
