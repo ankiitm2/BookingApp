@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { UserContext } from '../UserContext'
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import PlacesPage from './placespage/PlacesPage';
@@ -10,7 +10,12 @@ import AccountNav from './AccountNav';
 const AccountPage = () => {
     const [redirect, setRedirect] = useState(null);
     const { ready, user, setUser } = useContext(UserContext)
-    let { subpage } = useParams();
+    // let { subpage } = useParams();
+
+    const { pathName } = useLocation();
+    console.log('pathName', pathName);
+    let subpage = pathName?.split('/')?.[2];
+    console.log({ subpage })
 
     async function logout() {
         await axios.post('/logout');
